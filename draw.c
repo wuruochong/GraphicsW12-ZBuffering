@@ -100,16 +100,29 @@ void scan_line( struct matrix * polygons, int point, screen s, color c, zbuffer 
 		color1.green = 0; */
 		// color c1 = rand_color();
 		dx0 = (tx-bx)/(ty-by);
-		if (my==by) dx1 = 0;
-		else dx1 = (mx-bx)/(my-by);
+		dz0 = (tz-bz)/(ty-by);
+		if (my==by) {
+			dx1 = 0;
+			dz1 = 0;
+		}
+		else {
+			dx1 = (mx-bx)/(my-by);
+			dz1 = (mz-bz)/(my-by);
+		}
 		for (int j = 0; j<my-by ; j++){
 			draw_line(bx+(j*dx0), by+j,
 								bx+(j*dx1), by+j, s, c);
 		}
 
 		//from middle to top
-		if (ty == my) dx1 = 0;
-		else dx1 = (tx-mx)/(ty-my);
+		if (ty == my) {
+			dx1 = 0;
+			dz1 = 0;
+		}
+		else {
+			dx1 = (tx-mx)/(ty-my);
+			dz1 = (tz-mz)/(ty-my);
+		}
 		for (int k = 0; k<ty-my ; k++){
 			draw_line(bx+((k+my-by)*dx0), my+k,
 								mx+(k*dx1), my+k, s, c);
